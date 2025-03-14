@@ -1,7 +1,7 @@
 from src.langgraphagenticai.state.state import State
 import streamlit as st  
 from langchain_core.messages import HumanMessage, AIMessage  
-
+from src.langgraphagenticai.appConfig import MAX_HISTORY_LENGTH
 
 
 class BasicChatbotNode:
@@ -29,6 +29,10 @@ class BasicChatbotNode:
 
         # Store response in session state
         st.session_state.chat_history.append(AIMessage(content=response.content))
+
+        # Trim history if it exceeds the limit
+        if len(st.session_state.chat_history) > MAX_HISTORY_LENGTH:
+            st.session_state.chat_history = st.session_state.chat_history[-MAX_HISTORY_LENGTH:]
 
         return {"messages": response}
     

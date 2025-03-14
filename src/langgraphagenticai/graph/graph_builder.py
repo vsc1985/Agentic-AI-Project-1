@@ -6,7 +6,9 @@ from src.langgraphagenticai.nodes.basic_chatbot_node import BasicChatbotNode
 from src.langgraphagenticai.nodes.chatbot_with_Tool_node import ChatbotWithToolNode
 from src.langgraphagenticai.tools.serach_tool import get_tools,create_tool_node
 #from langgraph.checkpoint.memory import MemorySaver
-from langchain.memory import ConversationBufferMemory
+#from langchain.memory import ConversationBufferMemory
+from langchain_core.messages import ToolMessage
+from langchain.memory import ConversationBufferWindowMemory
 
 
 class GraphBuilder:
@@ -71,7 +73,8 @@ class GraphBuilder:
             self.chatbot_with_tools_build_graph()
 
         # Initialize memory
-        memory = ConversationBufferMemory(memory_key="messages", return_messages=True)
+        # memory = ConversationBufferMemory(memory_key="messages", return_messages=True)
+        memory = ConversationBufferWindowMemory(k=5, memory_key="messages", return_messages=True)
 
         # Attach memory to graph
         self.graph_builder.memory = memory  

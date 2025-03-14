@@ -1,5 +1,6 @@
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langgraph.prebuilt import ToolNode
+from langchain_core.messages import ToolMessage
 
 def get_tools():
     """
